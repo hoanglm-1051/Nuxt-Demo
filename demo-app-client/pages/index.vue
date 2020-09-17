@@ -1,5 +1,11 @@
 <template>
-    <div id="app">
+    <div class="container">
+        <p v-if="$auth.loggedIn">
+            Hello {{ user.name }}
+        </p>
+        <p v-if="!$auth.loggedIn">
+            Please sign in
+        </p>
         <div class="row">
             <div class="col-md-6">
                 <ListTask />

@@ -36,6 +36,7 @@ export default {
     ** https://nuxtjs.org/guide/plugins
     */
     plugins: [
+        '~plugins/mixins/user.js'
     ],
     /*
     ** Auto import components
