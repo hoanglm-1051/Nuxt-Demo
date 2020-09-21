@@ -89,12 +89,15 @@ export default {
         async registerUser () {
             await this.$axios.post('register', this.userForm)
 
-            this.$auth.loginWith('local', {
+            this.$auth.login({
                 data: {
                     email: this.userForm.email,
                     password: this.userForm.password
                 }
-            }).then(() => { this.$router.push('/') })
+            })
+            this.$router.push({
+                path: '/'
+            })
         }
     }
 }

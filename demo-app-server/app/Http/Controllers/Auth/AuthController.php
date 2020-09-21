@@ -48,6 +48,7 @@ class AuthController extends Controller
                     'email' => ['There is something wrong! We could not verify details']
             ]], 422);
         }
+        
         return (new UserResource($request->user()))
             ->additional([
                 'meta' => [

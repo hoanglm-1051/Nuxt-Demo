@@ -69,7 +69,10 @@ export default {
         async login () {
             await this.$auth.login({
                 data: this.userForm
-            }).then(() => this.$route.push('/'))
+            })
+            this.$router.push({
+                path: '/'
+            })
         }
     }
 }
