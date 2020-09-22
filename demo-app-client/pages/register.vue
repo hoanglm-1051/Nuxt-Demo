@@ -21,7 +21,6 @@
                                         autocomplete="name"
                                         v-model="userForm.name"
                                         required
-                                        autofocus
                                     >
                                 </div>
                             </div>

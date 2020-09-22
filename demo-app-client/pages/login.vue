@@ -19,7 +19,6 @@
                                         name="email"
                                         autocomplete="email"
                                         v-model="userForm.email"
-                                        autofocus
                                         required
                                     >
                                 </div>

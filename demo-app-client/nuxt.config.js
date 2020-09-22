@@ -87,7 +87,7 @@ export default {
                     },
                     user: {
                         url: '/user',
-                        method: 'post',
+                        method: 'get',
                         propertyName: 'data'
                     },
                     logout: false

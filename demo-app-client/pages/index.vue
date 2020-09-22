@@ -1,19 +1,19 @@
 <template>
     <div class="container">
-        <p v-if="$auth.loggedIn">
-            Hello {{ user.name }}
-        </p>
-        <p v-if="!$auth.loggedIn">
-            Please sign in
-        </p>
-        <div class="row">
-            <div class="col-md-6">
-                <ListTask />
+        <div v-if="$auth.loggedIn">
+            <h1>Hello {{ user.name }}!</h1>
+            <div class="row">
+                <div class="col-md-6">
+                    <ListTask />
+                </div>
+                <div class="col-md-6">
+                    <CompleteTask />
+                </div>
             </div>
-            <div class="col-md-6">
-                <CompleteTask />
-            </div>
+            <GetTask />
         </div>
-        <GetTask />
+        <h1 v-if="!$auth.loggedIn">
+            Please sign in!
+        </h1>
     </div>
 </template>
