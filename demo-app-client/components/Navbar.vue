@@ -13,21 +13,25 @@
                     aria-controls="navbarSupportedContent"
                     aria-expanded="false"
                 >
-                    <span class="navbar-toggler-icon"></span>
+                    <span class="navbar-toggler-icon" />
                 </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <div id="navbarSupportedContent" class="collapse navbar-collapse">
                     <ul class="navbar-nav ml-auto">
                         <template v-if="!loggedIn">
                             <li class="nav-item">
-                                <NuxtLink class="nav-link" to="/login">Login</NuxtLink>
+                                <NuxtLink class="nav-link" to="/login">
+                                    Login
+                                </NuxtLink>
                             </li>
                             <li class="nav-item">
-                                <NuxtLink class="nav-link" to="/register">Register</NuxtLink>
+                                <NuxtLink class="nav-link" to="/register">
+                                    Register
+                                </NuxtLink>
                             </li>
                         </template>
                         <template v-if="loggedIn">
                             <li class="nav-item">
-                                <a class="nav-link" @click.prevent="logout" href="#">
+                                <a class="nav-link" href="#" @click.prevent="logout">
                                     Logout
                                 </a>
                             </li>

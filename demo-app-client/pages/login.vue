@@ -14,11 +14,11 @@
                                 <div class="col-md-6">
                                     <input
                                         id="email"
+                                        v-model="userForm.email"
                                         type="email"
                                         class="form-control"
                                         name="email"
                                         autocomplete="email"
-                                        v-model="userForm.email"
                                         required
                                     >
                                 </div>
@@ -30,11 +30,11 @@
                                 <div class="col-md-6">
                                     <input
                                         id="password"
+                                        v-model="userForm.password"
                                         type="password"
                                         class="form-control"
                                         name="password"
                                         autocomplete="current-password"
-                                        v-model="userForm.password"
                                         required
                                     >
                                 </div>
