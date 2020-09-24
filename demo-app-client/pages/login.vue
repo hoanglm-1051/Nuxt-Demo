@@ -20,6 +20,7 @@
                                         name="email"
                                         autocomplete="email"
                                         required
+                                        autofocus
                                     >
                                 </div>
                             </div>
