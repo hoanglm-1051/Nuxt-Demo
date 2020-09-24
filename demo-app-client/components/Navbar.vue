@@ -2,9 +2,7 @@
     <div>
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
-                <a class="navbar-brand" href="#">
-                    Demo - App
-                </a>
+                <a class="navbar-brand" href="#">Demo - App</a>
                 <button
                     class="navbar-toggler"
                     type="button"
@@ -48,9 +46,7 @@ export default {
     methods: {
         logout () {
             this.$auth.logout()
-            this.$router.push({
-                path: '/login'
-            })
+            this.$router.push({path: '/login'})
         }
     }
 }

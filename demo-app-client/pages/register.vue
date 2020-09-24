@@ -21,6 +21,7 @@
                                         name="name"
                                         autocomplete="name"
                                         required
+                                        autofocus
                                     >
                                 </div>
                             </div>
