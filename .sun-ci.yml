@@ -1,0 +1,53 @@
+workspace: true
+
+stages:
+  - build
+  - test
+
+jobs:
+- name: build
+  stage: build
+  image: sunasteriskrnd/php-workspace:7.4
+  services:
+  - image: postgres:12-alpine
+    name: postgres_test
+    environment:
+      POSTGRES_DB: xxx
+      POSTGRES_USER: xxx
+      POSTGRES_PASSWORD: xxx
+  environment:
+    APP_ENV: testing
+  cache:
+  - key: comopser_vendor_$CI_BRANCH
+    paths:
+      - vendor
+  before_script:
+  - cp .env.example .env.testing
+  - composer install
+  - php artisan key:generate
+  - php artisan migrate
+  script:
+  - composer sniff
+  - composer test
+  after_script:
+  - echo "Finish job"
+  only:
+    branches:
+    - master
+    events:
+    - pull_request
+  except:
+    branches:
+    - develop
+    events:
+    - push
+  artifacts:
+    paths:
+    - app/
+    expires_in: 3 days
+
+- name: test:node
+  stage: test
+  image: node:12-alpine
+  script:
+  - npm run dev
