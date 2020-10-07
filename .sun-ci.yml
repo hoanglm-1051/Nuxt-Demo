@@ -9,12 +9,13 @@ jobs:
   stage: build
   image: sunasteriskrnd/php-workspace:7.4
   services:
-  - image: postgres:12-alpine
-    name: postgres_test
+  - image: mysql:5.7
+    name: mysql_test
     environment:
-      POSTGRES_DB: xxx
-      POSTGRES_USER: xxx
-      POSTGRES_PASSWORD: xxx
+      MYSQL_HOST: 127.0.0.1
+      MYSQL_DB: demo-app
+      MYSQL_USER: root
+      MYSQL_PASSWORD: hoangminh99
   environment:
     APP_ENV: testing
   cache:
