@@ -1,27 +1,54 @@
 workspace: true
 
 stages:
-  - build
-  - test
+  - Install
+  - Test
+  - Build
 
 jobs:
-- name: build
-  stage: build
+- name: Npm Install
+  stage: Install
+  image: node:12-alpine
+  script:
+  - npm install
+  cache:
+  - key: node_modules_$CI_BRANCH
+    paths:
+    - demo-app-client/node_modules
+
+- name: Composer Install
+  stage: Install
+  image: sunasteriskrnd/php-workspace:7.4
+  script:
+  - composer install
+  cache:
+  - key: vendor_$CI_BRANCH
+    paths:
+    - demo-app-server
+
+- name: Test
+  stage: Test
+  image: node:12-alpine
+  script:
+  - npm run dev
+
+- name: Build
+  stage: Build
   image: sunasteriskrnd/php-workspace:7.4
   services:
-  - image: mysql:5.7
+  - image: mysql
     name: mysql_test
     environment:
-    MYSQL_HOST: 127.0.0.1
-    MYSQL_DATABASE: demo-app
-    MYSQL_USER: root
-    MYSQL_PASSWORD: hoangminh99
+      MYSQL_HOST: 127.0.0.1
+      MYSQL_DATABASE: demo-app
+      MYSQL_USER: root
+      MYSQL_PASSWORD: hoangminh99
   environment:
     APP_ENV: testing
   cache:
   - key: comopser_vendor_$CI_BRANCH
     paths:
-    - vendor
+      - demo-app-server/vendor
   before_script:
   - cp .env.example .env.testing
   - composer install
@@ -42,22 +69,3 @@ jobs:
     - develop
     events:
     - push
-
-- name: Yarn Install
-  stage: Install
-  image: node:12-alpine
-  script:
-  - yarn
-  cache:
-    - key: node_modules_$CI_BRANCH
-      paths:
-      - demo-app-client/node_modules
-- name: Composer Install
-  stage: Install
-  image: sunasteriskrnd/php-workspace:7.4
-  script:
-  - composer install
-  cache:
-  - key: vendor_$CI_BRANCH
-    paths:
-    - demo-app-server/vendor
