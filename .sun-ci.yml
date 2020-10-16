@@ -1,71 +1,85 @@
-workspace: true
+workspace: false
 
 stages:
-  - Install
-  - Test
-  - Build
+  - build
+  - test
+  - deploy
 
 jobs:
-- name: Npm Install
-  stage: Install
-  image: node:12-alpine
-  script:
-  - npm install
-  cache:
-  - key: node_modules_$CI_BRANCH
-    paths:
-    - demo-app-client/node_modules
+  - name: Job 1
+    stage: build
+    image: node:12-alpine
+    allow_failure: true
+    services:
+      - redis:alpine
+    before_script:
+      - echo before_script
+    script:
+      - ls -la
+      - echo "Build title should take only subject from commit message"
+    after_script:
+      - echo "Build title should take only subject from commit message"
+    artifacts:
+      paths:
+      - demo-app-server/app/Http
+      expires_in: 3 days
+    release:
+      environment: test
+      url: https://htt.com
+  
+  - name: Job 2
+    stage: build
+    image: node:12-alpine
+    allow_failure: false
+    services:
+      - redis:alpine
+    before_script:
+      - echo before_script
+    script:
+      - ls -la
+      - echo "Build title should take only subject from commit message"
+    after_script:
+      - echo "Build title should take only subject from commit message"
+    artifacts:
+      paths:
+      - demo-app-server/app/Http
+      expires_in: 3 days
+    release:
+      environment: test
+      url: https://htt.com
 
-- name: Composer Install
-  stage: Install
-  image: sunasteriskrnd/php-workspace:7.4
-  script:
-  - composer install
-  cache:
-  - key: vendor_$CI_BRANCH
-    paths:
-    - demo-app-server
-
-- name: Test
-  stage: Test
-  image: node:12-alpine
-  script:
-  - npm run dev
-
-- name: Build
-  stage: Build
-  image: sunasteriskrnd/php-workspace:7.4
-  services:
-  - image: mysql
-    name: mysql_test
-    environment:
-      MYSQL_HOST: 127.0.0.1
-      MYSQL_DATABASE: demo-app
-      MYSQL_USER: root
-      MYSQL_PASSWORD: hoangminh99
-  environment:
-    APP_ENV: testing
-  cache:
-  - key: comopser_vendor_$CI_BRANCH
-    paths:
-      - demo-app-server/vendor
-  before_script:
-  - cp .env.example .env.testing
-  - composer install
-  - php artisan key:generate
-  - php artisan migrate
-  script:
-  - composer sniff
-  - composer test
-  after_script:
-  - echo "Finish job"
-  only:
-    branches:
-    - master
-    events:
-    - pull_request
-  except:
-    branches:
-    - develop
-    events:
-    - push
+  - name: Allow failed job
+    stage: test
+    image: node:12-alpine
+    allow_failure: true
+    script:
+      - sleep 5
+      - exit 1
+      
+  - name: Job 3
+    stage: test
+    image: node:12-alpine
+    release:
+      environment: production
+      url: https://htt22.com
+    script:
+      - sleep 5
+      - echo done
+  - name: Job 4
+    stage: deploy
+    image: node:12-alpine
+    release:
+      environment: production
+      url: https://htt.com
+    script:
+      - sleep 5
+      - echo done
+  - name: Disallow failure
+    stage: deploy
+    image: node:12-alpine
+    release:
+      environment: production
+      url: https://htt.com
+    script:
+      - sleep 5
+      - exit 1
