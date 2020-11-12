@@ -1,5 +1,3 @@
-workspace: true
-
 stages:
 - Build
 - Test
@@ -8,7 +6,6 @@ jobs:
 - name: Run tests
   stage: Build
   image: alpine
-  workspace: shared
   services:
   - redis:alpine
   script:
@@ -17,6 +14,7 @@ jobs:
 - name: Sleep
   stage: Build
   image: alpine
+  workspace: shared
   script:
   - sleep 10
 
