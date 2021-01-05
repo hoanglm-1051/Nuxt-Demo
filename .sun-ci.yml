@@ -1,4 +1,5 @@
-workspace: true
+default: 
+  workspace: shared
 
 checkout:
   depth: 10
