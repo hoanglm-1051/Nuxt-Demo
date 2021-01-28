@@ -1,8 +1,5 @@
 workspace: true
 
-checkout:
-  depth: 10
-
 stages:
 - Build
 - Test
@@ -11,40 +8,12 @@ jobs:
 - name: Run tests
   stage: Build
   image: alpine
-  services:
-  - redis:alpine
   script:
   - echo Hello
-
-- name: Sleep
-  stage: Build
-  image: alpine
-  workspace: shared
-  script:
-  - sleep 10
-
-- name: Wake up
-  stage: Build
-  image: alpine
-  script:
-  - echo Hello
-
-- name: Sleep again
-  stage: Build
-  image: alpine
-  script:
-  - sleep 10
-
-- name: Sleep more
-  stage: Test
-  image: alpine
-  script:
-  - sleep 10
 
 - name: Say bye!
   stage: Test
   image: alpine
   script:
-  - sleep 10
   - echo Bye
 
