@@ -1,8 +1,5 @@
 workspace: true
 
-checkout:
-  depth: 10
-
 stages:
 - Build
 - Test
@@ -22,6 +19,7 @@ jobs:
   workspace: shared
   script:
   - sleep 10
+  when: manual
 
 - name: Wake up
   stage: Build
