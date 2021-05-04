@@ -12,6 +12,7 @@ jobs:
   - redis:alpine
   script:
   - echo Hello
+  when: manual
 
 - name: Sleep
   stage: Build
@@ -19,7 +20,6 @@ jobs:
   workspace: shared
   script:
   - sleep 10
-  when: manual
 
 - name: Wake up
   stage: Build
