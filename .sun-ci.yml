@@ -1,48 +1,18 @@
-workspace: true
-
 stages:
-- Build
-- Test
-
+  - a
 jobs:
-- name: Run tests
-  stage: Build
-  image: alpine
-  services:
-  - redis:alpine
-  script:
-  - echo Hello
-  when: manual
-
-- name: Sleep
-  stage: Build
-  image: alpine
-  workspace: shared
-  script:
-  - sleep 10
-
-- name: Wake up
-  stage: Build
-  image: alpine
-  script:
-  - echo Hello
-
-- name: Sleep again
-  stage: Build
-  image: alpine
-  script:
-  - sleep 10
-
-- name: Sleep more
-  stage: Test
-  image: alpine
-  script:
-  - sleep 10
-
-- name: Say bye!
-  stage: Test
-  image: alpine
-  script:
-  - sleep 10
-  - echo Bye
-
+  - name: aaa
+    image: alpine
+    stage: a
+    script:
+      - echo "test"
+      - apk add curl
+      - sleep 60
+      - curl -X GET "elastic:9200/_cat/nodes?v&pretty"
+    services:
+      - name: elastic
+        image: elasticsearch:7.12.1
+        environment:
+        - cluster.name=docker-cluster
+        - bootstrap.memory_lock=true
+        - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
