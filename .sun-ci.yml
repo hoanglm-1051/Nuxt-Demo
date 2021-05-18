@@ -1,6 +1,3 @@
-default:
-  workspace: shared
-
 stages:
 - Build
 - Test
@@ -17,10 +14,10 @@ jobs:
 - name: Sleep
   stage: Build
   image: alpine
-  workspace: false
   script:
   - sleep 10
-  when: manual
+  depends_on:
+  - Run tests
 
 - name: Wake up
   stage: Build
@@ -33,16 +30,20 @@ jobs:
   image: alpine
   script:
   - sleep 10
-  depends_on:
-    - Sleep
 
-- name: Sleep more
+- name: Sleep one again
   stage: Test
   image: alpine
   script:
   - sleep 10
   depends_on:
-    - Run tests
+  - Anonymous job
+
+- name: Sleep more
+  stage: Test
+  image: alpine
+  script:
+    - sleep 10
 
 - name: Say bye!
   stage: Test
