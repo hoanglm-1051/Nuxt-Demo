@@ -39,7 +39,7 @@ jobs:
   - sleep 10
   only:
     triggers:
-      - ci-test: true
+      - ci-test
 
 - name: Sleep more
   stage: Test
@@ -47,8 +47,8 @@ jobs:
   script:
   - sleep 10
   only:
-    branches:
-       - ci-test
+    triggers:
+       - master
 
 - name: Say bye!
   stage: Test
@@ -58,9 +58,7 @@ jobs:
   - echo Bye
   only:
     triggers:
-      - master: true
+      - master
   except:
       messages:
         - '[ci skip]'
-      triggers: 
-        - master: true
