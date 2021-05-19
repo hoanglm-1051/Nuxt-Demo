@@ -53,3 +53,6 @@ jobs:
   script:
   - sleep 10
   - echo Bye
+  except:
+      messages:
+        - '[ci skip]'
