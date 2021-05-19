@@ -1,23 +1,15 @@
+default:
+  workspace: shared
+
 stages:
 - Build
-- Test
 
 jobs:
-- name: Run tests
-  stage: Build
-  image: alpine
-  services:
-  - redis:alpine
-  script:
-  - echo Hello
-
 - name: Sleep
   stage: Build
   image: alpine
   script:
   - sleep 10
-  depends_on:
-  - Run tests
 
 - name: Wake up
   stage: Build
@@ -30,24 +22,13 @@ jobs:
   image: alpine
   script:
   - sleep 10
+  depends_on:
+    - Sleep
 
-- name: Sleep one again
-  stage: Test
+- name: Sleep more
+  stage: Build
   image: alpine
   script:
   - sleep 10
   depends_on:
-  - Anonymous job
-
-- name: Sleep more
-  stage: Test
-  image: alpine
-  script:
-    - sleep 10
-
-- name: Say bye!
-  stage: Test
-  image: alpine
-  script:
-  - sleep 10
-  - echo Bye
+    - Anonymous job
