@@ -60,4 +60,4 @@ jobs:
       messages:
         - '[ci skip]'
       triggers: 
-        - master
+        - master: true
