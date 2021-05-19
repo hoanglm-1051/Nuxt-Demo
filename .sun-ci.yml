@@ -37,6 +37,9 @@ jobs:
   image: alpine
   script:
   - sleep 10
+  only:
+    triggers:
+      - master: true
 
 - name: Sleep more
   stage: Test
@@ -44,7 +47,7 @@ jobs:
   script:
   - sleep 10
   only:
-     branches:
+    branches:
        - ci-test
 
 - name: Say bye!
@@ -56,3 +59,5 @@ jobs:
   except:
       messages:
         - '[ci skip]'
+      triggers: 
+        - master
