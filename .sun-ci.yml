@@ -13,14 +13,18 @@ jobs:
   - redis:alpine
   script:
   - echo Hello
+  only:
+    branches:
+      - master
 
 - name: Sleep
   stage: Build
   image: alpine
-  workspace: false
   script:
   - sleep 10
-  when: manual
+  only:
+     branches:
+       - ci-test
 
 - name: Wake up
   stage: Build
@@ -33,16 +37,15 @@ jobs:
   image: alpine
   script:
   - sleep 10
-  depends_on:
-    - Sleep
 
 - name: Sleep more
   stage: Test
   image: alpine
   script:
   - sleep 10
-  depends_on:
-    - Run tests
+  only:
+     branches:
+       - ci-test
 
 - name: Say bye!
   stage: Test
