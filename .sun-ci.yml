@@ -59,6 +59,3 @@ jobs:
   only:
     triggers:
       - master
-  except:
-      messages:
-        - '[ci skip]'
