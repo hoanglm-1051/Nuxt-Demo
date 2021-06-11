@@ -9,50 +9,41 @@ jobs:
 - name: Run tests
   stage: Build
   image: alpine
+  workspace: shared
   services:
   - redis:alpine
   script:
   - echo Hello
-  only:
-    branches:
-      - master
 
 - name: Sleep
   stage: Build
   image: alpine
+  workspace: shared
   script:
   - sleep 10
-  only:
-     branches:
-       - ci-test
 
 - name: Wake up
   stage: Build
   image: alpine
   script:
   - echo Hello
+  when: manual
 
 - name: Sleep again
   stage: Build
   image: alpine
   script:
   - sleep 10
-  only:
-    triggers:
-      - ci-test
 
 - name: Sleep more
   stage: Test
   image: alpine
   script:
   - sleep 10
-  only:
-    triggers:
-       - master
 
 - name: Say bye!
   stage: Test
   image: alpine
   script:
   - sleep 10
-  - echo Bye
+  - echo Byeee!
