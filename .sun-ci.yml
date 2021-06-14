@@ -9,7 +9,6 @@ jobs:
 - name: Run tests
   stage: Build
   image: alpine
-  workspace: shared
   services:
   - redis:alpine
   script:
@@ -18,13 +17,13 @@ jobs:
 - name: Sleep
   stage: Build
   image: alpine
-  workspace: shared
   script:
   - sleep 10
 
 - name: Wake up
   stage: Build
   image: alpine
+  workspace: none
   script:
   - echo Hello
   when: manual
@@ -48,7 +47,7 @@ jobs:
   - sleep 10
   - echo Byeee!
   
-- name: Say bye!
+- name: Say bye again!
   stage: Test
   image: alpine
   workspace: none
