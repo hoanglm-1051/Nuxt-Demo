@@ -47,3 +47,12 @@ jobs:
   script:
   - sleep 10
   - echo Byeee!
+  
+- name: Say bye!
+  stage: Test
+  image: alpine
+  workspace: none
+  script:
+  - sleep 10
+  - echo Byeee!
+  when: manual
