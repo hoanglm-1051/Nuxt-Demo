@@ -45,7 +45,7 @@ jobs:
   image: alpine
   script:
   - sleep 10
-  - echo Byeee!
+  - echo Byeeee!
   
 - name: Say bye again!
   stage: Test
