@@ -9,8 +9,6 @@ jobs:
 - name: Run tests
   stage: Build
   image: alpine
-  services:
-  - redis:alpine
   script:
   - echo Hello
 
