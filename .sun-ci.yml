@@ -2,54 +2,31 @@ default:
   workspace: shared
 
 stages:
-- Build
-- Test
+  - Install
 
 jobs:
-- name: Run tests
-  stage: Build
-  image: alpine
-  script:
-  - echo Hello
+  - name: Yarn Install
+    stage: Install
+    image: node:14-alpine
+    before_script:
+    - yarn config set network-timeout 300000
+    script:
+    - yarn
+    cache:
+    - key:
+        files:
+        - demo-app-client/yarn.lock
+      paths:
+      - demo-app-client/node_modules
 
-- name: Sleep
-  stage: Build
-  image: alpine
-  script:
-  - sleep 10
-
-- name: Wake up
-  stage: Build
-  image: alpine
-  workspace: none
-  script:
-  - echo Hello
-  when: manual
-
-- name: Sleep again
-  stage: Build
-  image: alpine
-  script:
-  - sleep 10
-
-- name: Sleep more
-  stage: Test
-  image: alpine
-  script:
-  - sleep 10
-
-- name: Say bye!
-  stage: Test
-  image: alpine
-  script:
-  - sleep 10
-  - echo Byeeee!
-
-- name: Say bye again!
-  stage: Test
-  image: alpine
-  workspace: none
-  script:
-  - sleep 10
-  - echo Byeeeeeeee!
-  
+  - name: Composer Install
+    stage: Install
+    image: sunasteriskrnd/php-workspace:7.4
+    script:
+    - composer install -d demo-app-server
+    cache:
+    - key:
+        files:
+        - demo-app-server/composer.lock
+      paths:
+      - demo-app-server/vendor
