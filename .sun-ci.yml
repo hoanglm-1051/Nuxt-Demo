@@ -16,8 +16,10 @@ jobs:
     - key:
         files:
         - demo-app-client/yarn.lock
+        - demo-app-client/package.json
       paths:
       - demo-app-client/node_modules
+      - demo-app-client/static
 
   - name: Composer Install
     stage: Install
@@ -27,6 +29,8 @@ jobs:
     cache:
     - key:
         files:
+        - demo-app-server/composer.json
         - demo-app-server/composer.lock
       paths:
       - demo-app-server/vendor
+      - demo-app-server/storage
