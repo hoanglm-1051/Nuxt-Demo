@@ -11,7 +11,7 @@ jobs:
     before_script:
     - yarn config set network-timeout 300000
     script:
-    - yarn
+    - yarn -v
     cache:
     - key:
         files:
@@ -25,12 +25,11 @@ jobs:
     stage: Install
     image: sunasteriskrnd/php-workspace:7.4
     script:
-    - composer install -d demo-app-server
+    - composer -v
     cache:
     - key:
         files:
         - demo-app-server/composer.json
         - demo-app-server/composer.lock
       paths:
-      - demo-app-server/vendor
       - demo-app-server/storage
