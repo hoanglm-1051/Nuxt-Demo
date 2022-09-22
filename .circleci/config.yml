@@ -29,11 +29,11 @@ jobs:
           command: |
             set -exu
             mkdir -p /tmp/workspace/pages
-            mv demo-app-client/pages/* /tmp/workspace/pages
+            mv demo-app-client/pages/* /tmp/workspace/pages/
       - persist_to_workspace:
           root: /tmp/workspace
           paths:
-            - pages/index.vue
+            - pages
   yarn_install_again:
     executor:
       name: node/default
