@@ -16,7 +16,9 @@ jobs:
     steps:
       - run: 
           name: "Lint JS assets"
-          command: yarn lint
+          command: |
+            cd demo-app-client
+            yarn lint
       - persist_to_workspace:
           root: demo-app-client
           paths:
@@ -29,7 +31,9 @@ jobs:
     steps:
       - run: 
           name: "Lint JS assets"
-          command: yarn lint
+          command: |
+            cd demo-app-client
+            yarn lint
       - attach_workspace:
           at: demo-app-client
     
