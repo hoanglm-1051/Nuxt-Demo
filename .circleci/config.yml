@@ -7,6 +7,8 @@ workflows:
   test-build:
     jobs:
       - yarn_install
+  test-build-again:
+    jobs:
       - yarn_install_again
 jobs:
   yarn_install:
@@ -33,7 +35,6 @@ jobs:
       - run: 
           name: "Lint JS assets"
           command: |
-            sleep 50
             ls -la /tmp/workspace/assets/
       - attach_workspace:
           at: /tmp/workspace
