@@ -1,0 +1,35 @@
+version: 2.1
+
+orbs:
+  node: circleci/node@4.7.0
+
+workflows:
+  test-build:
+    jobs:
+      - yarn_install
+      - yarn_install_again
+jobs:
+  yarn_install:
+    executor:
+      name: node/default
+      tag: '14.17.3'
+    steps:
+      - run: 
+          name: "Lint JS assets"
+          command: yarn lint
+      - persist_to_workspace:
+          root: demo-app-client
+          paths:
+            - static
+            - pages
+  yarn_install_again:
+    executor:
+      name: node/default
+      tag: '14.17.3'
+    steps:
+      - run: 
+          name: "Lint JS assets"
+          command: yarn lint
+      - attach_workspace:
+          at: demo-app-client
+    
