@@ -29,7 +29,7 @@ jobs:
           command: |
             set -exu
             mkdir -p /tmp/workspace/assets
-            mv demo-app-client/assets/* /tmp/workspace/assets/
+            mv demo-app-client/assets/* /tmp/workspace/assets/test
       - persist_to_workspace:
           root: *workspace_root
           paths:
@@ -40,7 +40,7 @@ jobs:
       tag: '14.17.3'
     steps:
       - attach_workspace:
-          at: /tmp/workspace/assetss
+          at: /tmp/workspace/assets
       - checkout
       - run: 
           name: "Lint JS assets"
