@@ -32,7 +32,7 @@ jobs:
       - checkout
       - run: 
           name: "Lint JS assets"
-          command: ls -la demo-app-client/assets
+          command: ls -la /tmp/workspace/assets
       - attach_workspace:
           at: /tmp/workspace
     
