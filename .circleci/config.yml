@@ -17,13 +17,12 @@ jobs:
       - run: 
           name: "Lint JS assets"
           command: |
-            cd demo-app-client
-            yarn lint
+            mkdir -p /tmp/workspace/assets
+            mv demo-app-client/assets/* /tmp/workspace/assets/
       - persist_to_workspace:
-          root: demo-app-client
+          root: /tmp/workspace
           paths:
-            - static
-            - pages
+            - assets
   yarn_install_again:
     executor:
       name: node/default
@@ -31,9 +30,7 @@ jobs:
     steps:
       - run: 
           name: "Lint JS assets"
-          command: |
-            cd demo-app-client
-            yarn lint
+          command: ls -la /tmp/workspace/assets/
       - attach_workspace:
-          at: demo-app-client
+          at: /tmp/workspace
     
