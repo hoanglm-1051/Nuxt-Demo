@@ -40,7 +40,7 @@ jobs:
       tag: '14.17.3'
     steps:
       - attach_workspace:
-          at: /tmp/workspace/assets
+          at: /tmp/workspace/assetss
       - checkout
       - run: 
           name: "Lint JS assets"
