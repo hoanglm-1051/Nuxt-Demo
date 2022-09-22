@@ -33,14 +33,14 @@ jobs:
       - persist_to_workspace:
           root: /tmp/workspace
           paths:
-            - pages
+            - pages/index.vue
   yarn_install_again:
     executor:
       name: node/default
       tag: '14.17.3'
     steps:
       - attach_workspace:
-          at: /tmp/workspace/pages/*
+          at: /tmp/workspace/pages
       - checkout
       - run: 
           name: "Lint JS assets"
