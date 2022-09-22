@@ -1,6 +1,3 @@
-default:
-  workspace: shared
-
 stages:
   - Install
 
@@ -11,7 +8,11 @@ jobs:
     before_script:
     - yarn config set network-timeout 300000
     script:
-    - yarn -v
+    - yarn install
+    - mkdir root-dir\directory-1
+    - touch root-dir\directory-1\test.txt
+    - echo "test" >> root-dir\directory-1\test.txt
+    - cat root-dir\directory-1\test.txt
     cache:
     - key:
         files:
@@ -20,16 +21,3 @@ jobs:
       paths:
       - demo-app-client/node_modules
       - demo-app-client/static
-
-  - name: Composer Install
-    stage: Install
-    image: sunasteriskrnd/php-workspace:7.4
-    script:
-    - composer -v
-    cache:
-    - key:
-        files:
-        - demo-app-server/composer.json
-        - demo-app-server/composer.lock
-      paths:
-      - demo-app-server/storage
