@@ -28,7 +28,7 @@ jobs:
           name: "Lint JS assets"
           command: |
             set -exu
-            mkdir -p /tmp/workspace/assets
+            mkdir -p /tmp/workspace/pages/test
             mv demo-app-client/pages/* /tmp/workspace/pages/test
       - persist_to_workspace:
           root: /tmp/workspace
