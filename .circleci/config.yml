@@ -3,6 +3,13 @@ version: 2.1
 orbs:
   node: circleci/node@4.7.0
 
+references:
+  workspace_root: &workspace_root
+    /tmp/workspace
+  attach_workspace: &attach_workspace
+    attach_workspace:
+      at: *workspace_root
+
 workflows:
   test-build:
     jobs:
@@ -23,7 +30,7 @@ jobs:
             mkdir -p /tmp/workspace/assets
             mv demo-app-client/assets/* /tmp/workspace/assets/
       - persist_to_workspace:
-          root: /tmp/workspace
+          root: *workspace_root
           paths:
             - assets
   yarn_install_again:
@@ -36,6 +43,5 @@ jobs:
           name: "Lint JS assets"
           command: |
             ls -la /tmp/workspace/assets/
-      - attach_workspace:
-          at: /tmp/workspace
+      - *attach_workspace
     
