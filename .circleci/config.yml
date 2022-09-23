@@ -25,7 +25,7 @@ jobs:
       tag: '14.17.3'
     steps:
       - attach_workspace:
-          at: /tmp/workspace
+          at: /tmp/workspace/pages
       - checkout
       - run: 
           name: "Lint JS"
