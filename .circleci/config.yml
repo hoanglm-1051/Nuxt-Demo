@@ -26,7 +26,7 @@ jobs:
     steps:
       - checkout
       - run: 
-          name: "Lint JS assets"
+          name: "Lint JS"
           command: |
             set -exu
             mkdir -p /tmp/workspace/pages
