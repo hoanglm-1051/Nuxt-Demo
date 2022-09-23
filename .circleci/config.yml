@@ -14,7 +14,7 @@ workflows:
   test-build:
     jobs:
       - yarn_install
-      - yarn_install_again:
+      - yarn_install_again
 
 jobs:
   yarn_install:
