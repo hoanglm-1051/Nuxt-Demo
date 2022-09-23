@@ -30,7 +30,7 @@ jobs:
           at: /
       - checkout
       - run: 
-          name: "Attach data to workspace"
+          name: "Persist data to workspace"
           command: |
             set -exu
             mkdir -p /tmp/workspace/pages
