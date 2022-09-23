@@ -44,7 +44,7 @@ jobs:
     steps:
       - checkout
       - attach_workspace:
-          at: /tmp/workspace/yeah/hooo
+          at: /yeah/hooo
       - run: 
           name: "Lint JS assets"
           command: |
