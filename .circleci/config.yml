@@ -15,6 +15,9 @@ workflows:
     jobs:
       - yarn_install
       - yarn_install_again
+  test-build-again:
+    jobs:
+      - yarn_install_again
       
 jobs:
   yarn_install:
@@ -45,4 +48,5 @@ jobs:
           name: "Lint JS assets"
           command: |
             ls -la /tmp/workspace/pages
+            cat /tmp/workspace/pages/index.vue
     
