@@ -53,6 +53,7 @@ jobs:
             ls -la /tmp/workspace/pages
             cat /tmp/workspace/pages/index.vue
             rm -rf /tmp/workspace/pages/index.vue
+            cat /tmp/workspace/pages/index.vue
       - persist_to_workspace:
           root: /tmp/workspace
           paths:
