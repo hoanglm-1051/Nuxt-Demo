@@ -19,7 +19,7 @@ workflows:
             - persirt_data_to_workspace
       - attach_workspace_again: 
           requires:
-            - persirt_data_to_workspace
+            - attach_data_from_workspace
 jobs:
   persirt_data_to_workspace:
     executor:
