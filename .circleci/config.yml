@@ -30,7 +30,7 @@ jobs:
           command: |
             set -exu
             mkdir -p /tmp/workspace/pages
-            mv demo-app-client/pages/index.vue /tmp/workspace/pages/index.vue
+            mv demo-app-client/pages /tmp/workspace/pages
       - persist_to_workspace:
           root: /tmp/workspace
           paths:
@@ -46,6 +46,6 @@ jobs:
       - run: 
           name: "Lint JS assets"
           command: |
-            ls -la /tmp/workspace/pages/pages
+            ls -la /tmp/workspace/pages
             cat /tmp/workspace/pages/index.vue
     
