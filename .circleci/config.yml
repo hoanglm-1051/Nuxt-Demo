@@ -14,7 +14,6 @@ workflows:
   test-build:
     jobs:
       - yarn_install
-      - yarn_install_again
   test-build-again:
     jobs:
       - yarn_install_again
@@ -31,7 +30,7 @@ jobs:
           command: |
             set -exu
             mkdir -p /tmp/workspace/pages
-            mv demo-app-client/pages/* /tmp/workspace/pages/
+            mv demo-app-client/pages/index.vue /tmp/workspace/pages/index.vue
       - persist_to_workspace:
           root: /tmp/workspace
           paths:
