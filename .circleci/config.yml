@@ -46,6 +46,6 @@ jobs:
       - run: 
           name: "Lint JS assets"
           command: |
-            ls -la /tmp/workspace/pages
+            ls -la /tmp/workspace/pages/pages
             cat /tmp/workspace/pages/index.vue
     
