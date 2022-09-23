@@ -50,4 +50,8 @@ jobs:
           command: |
             ls -la /tmp/workspace/pages
             cat /tmp/workspace/pages/index.vue
+      - persist_to_workspace:
+          root: /tmp/workspace
+          paths:
+            - pages
     
