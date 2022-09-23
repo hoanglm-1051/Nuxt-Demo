@@ -15,8 +15,6 @@ workflows:
     jobs:
       - yarn_install
       - yarn_install_again:
-          requires:
-            - yarn_install
 
 jobs:
   yarn_install:
