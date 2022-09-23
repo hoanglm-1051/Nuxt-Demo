@@ -30,7 +30,7 @@ jobs:
           command: |
             set -exu
             mkdir -p /tmp/workspace/pages
-            mv demo-app-client/pages /tmp/workspace/pages
+            mv demo-app-client/pages/* /tmp/workspace/pages
       - persist_to_workspace:
           root: /tmp/workspace
           paths:
@@ -40,9 +40,9 @@ jobs:
       name: node/default
       tag: '14.17.3'
     steps:
+      - checkout
       - attach_workspace:
           at: /tmp/workspace/pages
-      - checkout
       - run: 
           name: "Lint JS assets"
           command: |
