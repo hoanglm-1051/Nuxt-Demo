@@ -13,13 +13,15 @@ references:
 workflows:
   test-build:
     jobs:
-      - yarn_install
-      - yarn_install_again:
+      - persirt_data_to_workspace
+      - attach_data_from_workspace:
           requires:
-            - yarn_install
-
+            - persirt_data_to_workspace
+      - attach_workspace_again: 
+          requires:
+            - persirt_data_to_workspace
 jobs:
-  yarn_install:
+  persirt_data_to_workspace:
     executor:
       name: node/default
       tag: '14.17.3'
@@ -28,7 +30,7 @@ jobs:
           at: /
       - checkout
       - run: 
-          name: "Lint JS"
+          name: "Attach data to workspace"
           command: |
             set -exu
             mkdir -p /tmp/workspace/pages
@@ -37,7 +39,7 @@ jobs:
           root: /tmp/workspace
           paths:
             - pages
-  yarn_install_again:
+  attach_data_from_workspace:
     executor:
       name: node/default
       tag: '14.17.3'
@@ -46,7 +48,21 @@ jobs:
       - attach_workspace:
           at: /tmp/workspace
       - run: 
-          name: "Lint JS assets"
+          name: "Attach data from workspace"
+          command: |
+            ls -la /tmp/workspace/pages
+            cat /tmp/workspace/pages/index.vue
+            rm -rf /tmp/workspace/pages/index.vue
+  attach_workspace_again:
+    executor:
+      name: node/default
+      tag: '14.17.3'
+    steps:
+      - checkout
+      - attach_workspace:
+          at: /tmp/workspace
+      - run: 
+          name: "Attach data from workspace again"
           command: |
             ls -la /tmp/workspace/pages
             cat /tmp/workspace/pages/index.vue
