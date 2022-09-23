@@ -25,7 +25,7 @@ jobs:
       tag: '14.17.3'
     steps:
       - attach_workspace:
-          at: /pages/test/haha
+          at: /tmp
       - checkout
       - run: 
           name: "Lint JS"
@@ -44,14 +44,10 @@ jobs:
     steps:
       - checkout
       - attach_workspace:
-          at: /yeah/hooo
+          at: /tmp/workspace
       - run: 
           name: "Lint JS assets"
           command: |
             ls -la /tmp/workspace/pages
             cat /tmp/workspace/pages/index.vue
-      - persist_to_workspace:
-          root: /tmp/workspace
-          paths:
-            - pages
     
