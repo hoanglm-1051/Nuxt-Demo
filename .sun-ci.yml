@@ -1,51 +1,73 @@
 default:
   workspace: shared
 
+checkout:
+  depth: 3
+
 stages:
-  - persist_workspace
-  - attach_workspace
-  - attach_workspace_again
+  - Install
+  - Test
+  - Build
 
 jobs:
-  - name: Persist
-    stage: persist_workspace
+  - name: Yarn Install
+    stage: Install
     image: node:14-alpine
+    before_script:
+    - yarn config set network-timeout 300000
     script:
-      - ls -la /build/hoanglm-2435/laravel-nuxt-project
-      - mkdir -p /workspace/pages
-      - mv demo-app-client/pages/* /workspace/pages
-      - mv demo-app-client/static/* /workspace/static
-      - ls -la /workspace
+    - yarn
     cache:
-      - key:
-          files:
-            - demo-app-client/yarn.lock
-            - demo-app-client/package.json
-        paths:
-          - demo-app-client/static
-    workspace:
-      - persist:
-          root: /workspace
-          paths:
-            - pages
-            - static
+    - key:
+        files:
+          - demo-app-client/yarn.lock
+      paths:
+        - demo-app-client/node_modules
 
-  - name: Attach
-    stage: attach_workspace
-    image: node:14-alpine
+  - name: Composer Install
+    stage: Install
+    image: ghcr.io/sun-asterisk-research/php-dev:7.4.30-alpine3.15
+    entrypoint: []
     script:
-      - pwd
-      - ls -la /build/hoanglm-2435/laravel-nuxt-project
-      - ls -la /workspace/pages
-      - cat /workspace/pages/index.vue
-      - rm -rf /workspace/pages/index.vue
-    workspace:
-      - attach: /workspace/pages
+    - composer install -d demo-app-server
+    cache:
+    - key:
+        files:
+        - demo-app-server/composer.lock
+      paths:
+      - demo-app-server/vendor
 
-  - name: Attach again
-    stage: attach_workspace_again
-    image: node:14-alpine
+  - name: Wake up
+    stage: Test
+    image: alpine
     script:
-      - ls -la /workspace/pages
-    workspace:
-      - attach: /workspace/pages
+    - sleep 2
+    - echo Hello
+
+  - name: Sleep again
+    stage: Test
+    image: alpine
+    script:
+    - sleep 15
+
+  - name: Sleep more
+    stage: Test
+    image: alpine
+    script:
+    - sleep 10
+
+  - name: Say bye!
+    stage: Test
+    image: alpine
+    script:
+    - sleep 10
+    - echo Byeee!
+
+  - name: Say bye again!
+    stage: Build
+    image: alpine
+    workspace: none
+    script:
+    - sleep 120
+    - echo Byeee!
+  
