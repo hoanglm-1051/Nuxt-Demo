@@ -8,66 +8,28 @@ stages:
   - Install
   - Test
   - Build
+  - Analysis
 
 jobs:
   - name: Yarn Install
     stage: Install
     image: node:14-alpine
     before_script:
-    - yarn config set network-timeout 300000
+      - yarn config set network-timeout 300000
     script:
-    - yarn
+      - yarn install
+      - ls -la web
+      - mkdir -p /workspace/web/node_modules
+      - cp -r web/node_modules/* /workspace/web/node_modules
+      - ls -la /workspace/web/node_modules
     cache:
-    - key:
-        files:
-          - demo-app-client/yarn.lock
-      paths:
-        - demo-app-client/node_modules
-
-  - name: Composer Install
-    stage: Install
-    image: ghcr.io/sun-asterisk-research/php-dev:7.4.30-alpine3.15
-    entrypoint: []
-    script:
-    - composer install -d demo-app-server
-    cache:
-    - key:
-        files:
-        - demo-app-server/composer.lock
-      paths:
-      - demo-app-server/vendor
-
-  - name: Wake up
-    stage: Test
-    image: alpine
-    script:
-    - sleep 2
-    - echo Hello
-
-  - name: Sleep again
-    stage: Test
-    image: alpine
-    script:
-    - sleep 15
-
-  - name: Sleep more
-    stage: Test
-    image: alpine
-    script:
-    - sleep 10
-
-  - name: Say bye!
-    stage: Test
-    image: alpine
-    script:
-    - sleep 10
-    - echo Byeee!
-
-  - name: Say bye again!
-    stage: Build
-    image: alpine
-    workspace: none
-    script:
-    - sleep 120
-    - echo Byeee!
-  
+      - key:
+          files:
+            - web/yarn.lock
+        paths:
+          - web/node_modules
+    workspace:
+      - persist:
+          root: /workspace
+          paths:
+            - web
