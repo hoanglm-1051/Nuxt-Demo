@@ -17,11 +17,7 @@ jobs:
     before_script:
       - yarn config set network-timeout 300000
     script:
-      - yarn install
-      - ls -la web
-      - mkdir -p /workspace/web/node_modules
-      - cp -r web/node_modules/* /workspace/web/node_modules
-      - ls -la /workspace/web/node_modules
+      - yarn
     cache:
       - key:
           files:
@@ -30,6 +26,40 @@ jobs:
           - web/node_modules
     workspace:
       - persist:
-          root: /workspace
+          root: web
           paths:
-            - web
+            - node_modules
+            
+    
+  - name: Composer Install
+    stage: Install
+    image: ghcr.io/sun-asterisk-research/php-dev:7.4.30-alpine3.15
+    script:
+      - composer install -d api
+    cache:
+      - key:
+          files:
+            - api/composer.lock
+        paths:
+          - api/vendor
+    workspace:
+      - persist:
+          root: api
+          paths:
+            - vendor
+
+  - name: ESLint
+    stage: Test
+    image: node:14-alpine
+    script:
+      - yarn lint --max-warnings 0
+    workspace: 
+      - attach: web/node_modules
+
+  - name: PHP CodeSniffer
+    stage: Test
+    image: sunasteriskrnd/php-workspace:7.4
+    script:
+      - composer sniff -d api
+    workspace:
+      - attach: api/vendor
