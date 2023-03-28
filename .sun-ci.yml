@@ -29,8 +29,8 @@ jobs:
           root: web
           paths:
             - node_modules
-            
-    
+
+
   - name: Composer Install
     stage: Install
     image: ghcr.io/sun-asterisk-research/php-dev:7.4.30-alpine3.15
@@ -53,7 +53,7 @@ jobs:
     image: node:14-alpine
     script:
       - yarn lint --max-warnings 0
-    workspace: 
+    workspace:
       - attach: web/node_modules
 
   - name: PHP CodeSniffer
@@ -63,3 +63,9 @@ jobs:
       - composer sniff -d api
     workspace:
       - attach: api/vendor
+
+  - name: Composer Sniffer
+    stage: Test
+    image: ghcr.io/sun-asterisk-research/php-dev:7.4.30-alpine3.15
+    script:
+      - composer sniff -d api
