@@ -22,12 +22,6 @@ jobs:
             - web/yarn.lock
         paths:
           - web/node_modules
-    workspace:
-      - persist:
-          root: web
-          paths:
-            - node_modules
-
 
   - name: Composer Install
     stage: Install
@@ -40,24 +34,15 @@ jobs:
             - api/composer.lock
         paths:
           - api/vendor
-    workspace:
-      - persist:
-          root: api
-          paths:
-            - vendor
 
   - name: ESLint
     stage: Test
     image: node:14-alpine
     script:
       - yarn lint --max-warnings 0
-    workspace:
-      - attach: web/node_modules
 
   - name: PHP CodeSniffer
     stage: Test
     image: sunasteriskrnd/php-workspace:7.4
     script:
       - composer sniff -d api
-    workspace:
-      - attach: api/vendor
