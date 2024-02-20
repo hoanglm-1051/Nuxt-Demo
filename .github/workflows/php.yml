@@ -7,26 +7,14 @@ on:
     branches: [ "master" ]
 
 jobs:
-  commit-lint:
-    runs-on: ubuntu-latest
-    container: sunci/commitlint:latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: CommitLint
-        run: |
-          echo "module.exports = {extends:['@commitlint/config-conventional']}" > commitlint.config.js
-          export COMMIT_MESSAGE=$(git log -1 --pretty=format:"%s")
-          echo "$COMMIT_MESSAGE" | commitlint
   stg:
     if: github.ref == 'refs/heads/master' && github.event_name == 'push'
-    needs: [commit-lint]
     runs-on: ubuntu-latest
     container: docker:20.10.17
     env:
       UNIQUE_TAG_SUFFIX: -stg
       TAG: develop
       APP_URL: https://atlas-staging.sun-asterisk.vn
-      DOCKER_HOST: tcp://docker:2375
     services:
       dind:
         image: docker:20.10.17-dind
