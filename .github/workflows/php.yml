@@ -7,31 +7,33 @@ on:
     branches: [ "master" ]
 
 jobs:
-  stg:
-    if: github.ref == 'refs/heads/master' && github.event_name == 'push'
+  build:
+    strategy:
+      matrix:
+        include:
+          - env: staging
+            ref: develop
+            tag: develop
+            suffix: -stg
+            url: https://atlas-staging.sun-asterisk.vn
+          - env: production
+            ref: master
+            tag: stable
+            suffix: -prod
+            url: https://atlas.sun-asterisk.vn
+    if: ${{ github.ref_name == matrix.ref && github.event_name == 'push' }}
     runs-on: ubuntu-latest
     container: docker:20.10.17
     env:
-      UNIQUE_TAG_SUFFIX: -stg
-      TAG: develop
-      APP_URL: https://atlas-staging.sun-asterisk.vn
+      TAG: ${{ matrix.tag }}
+      UNIQUE_TAG_SUFFIX: ${{ matrix.suffix }}
+      APP_URL: ${{ matrix.url }}
     services:
       dind:
         image: docker:20.10.17-dind
     steps:
       - uses: actions/checkout@v3
 
-      - name: Staging build
+      - name: Deploy ${{ matrix.env }}
         run: |
-          echo $GITHUB_REF
-          echo $GITHUB_REF_NAME
-          echo $GITHUB_EVENT_NAME
-          export UNIQUE_TAG="build-$GITHUB_RUN_NUMBER$UNIQUE_TAG_SUFFIX"
-          echo $UNIQUE_TAG
-          echo $TAG
-          echo $APP_URL
-          apk add --no-cache make
-          echo "$HARBOR_PASSWORD" | docker login $HARBOR_REGISTRY -u "$HARBOR_USERNAME" --password-stdin
-          make docker-pull
-          make docker-build
-          make docker-push
+          echo ${{ matrix.env }} ${{ matrix.tag }} ${{ matrix.suffix }} ${{ matrix.url }} ${{ matrix.ref }}
