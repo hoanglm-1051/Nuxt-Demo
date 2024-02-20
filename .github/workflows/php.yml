@@ -23,11 +23,13 @@ jobs:
 
       - name: Staging build
         run: |
+          echo $GITHUB_REF
+          echo $GITHUB_REF_NAME
+          echo $GITHUB_EVENT_NAME
           export UNIQUE_TAG="build-$GITHUB_RUN_NUMBER$UNIQUE_TAG_SUFFIX"
           echo $UNIQUE_TAG
           echo $TAG
           echo $APP_URL
-          echo $DOCKER_HOST
           apk add --no-cache make
           echo "$HARBOR_PASSWORD" | docker login $HARBOR_REGISTRY -u "$HARBOR_USERNAME" --password-stdin
           make docker-pull
