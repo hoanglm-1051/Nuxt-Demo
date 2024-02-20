@@ -21,7 +21,7 @@ jobs:
             tag: stable
             suffix: -prod
             url: https://atlas.sun-asterisk.vn
-    if: GITHUB_REF_NAME == matrix.ref && GITHUB_EVENT_NAME == 'push'
+    if: github.ref_name == matrix.ref && github.event_name == 'push'
     runs-on: ubuntu-latest
     container: docker:20.10.17
     env:
