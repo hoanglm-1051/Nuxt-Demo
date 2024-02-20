@@ -1,0 +1,46 @@
+name: Demo Workflow
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  commit-lint:
+    runs-on: ubuntu-latest
+    container: sunci/commitlint:latest
+    steps:
+      - name: CommitLint
+        run: |
+          echo "module.exports = {extends:['@commitlint/config-conventional']}" > commitlint.config.js
+          export COMMIT_MESSAGE=$(git log -1 --pretty=format:"%s")
+          echo "$COMMIT_MESSAGE" | commitlint
+  stg:
+    if: github.ref == 'refs/heads/master' && github.event_name == 'push'
+    needs: [commit-lint]
+    runs-on: ubuntu-latest
+    container: docker:20.10.17
+    env:
+      UNIQUE_TAG_SUFFIX: -stg
+      TAG: develop
+      APP_URL: https://atlas-staging.sun-asterisk.vn
+      DOCKER_HOST: tcp://docker:2375
+    services:
+      dind:
+        image: docker:20.10.17-dind
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Staging build
+        run: |
+          export UNIQUE_TAG="build-$GITHUB_RUN_NUMBER$UNIQUE_TAG_SUFFIX"
+          echo $UNIQUE_TAG
+          echo $TAG
+          echo $APP_URL
+          echo $DOCKER_HOST
+          apk add --no-cache make
+          echo "$HARBOR_PASSWORD" | docker login $HARBOR_REGISTRY -u "$HARBOR_USERNAME" --password-stdin
+          make docker-pull
+          make docker-build
+          make docker-push
