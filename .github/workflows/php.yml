@@ -6,34 +6,32 @@ on:
   pull_request:
     branches: [ "master" ]
 
-jobs:
-  build:
-    strategy:
-      matrix:
-        include:
-          - env: staging
-            ref: develop
-            tag: develop
-            suffix: -stg
-            url: https://atlas-staging.sun-asterisk.vn
-          - env: production
-            ref: master
-            tag: stable
-            suffix: -prod
-            url: https://atlas.sun-asterisk.vn
-    runs-on: ubuntu-latest
-    container: docker:20.10.17
-    env:
-      TAG: ${{ matrix.tag }}
-      UNIQUE_TAG_SUFFIX: ${{ matrix.suffix }}
-      APP_URL: ${{ matrix.url }}
-    services:
-      dind:
-        image: docker:20.10.17-dind
-    steps:
-      - uses: actions/checkout@v3
+.docker-build: &docker-build
+  runs-on: ubuntu-latest
+  container: docker:20.10.17
+  services:
+    dind:
+      image: docker:20.10.17-dind
+  steps:
+    - uses: actions/checkout@v3
 
-      - name: Deploy ${{ matrix.env }}
-        if: github.ref_name == ${{ matrix.ref }} && github.event_name == 'pull_request'
-        run: |
-          echo ${{ matrix.env }} ${{ matrix.tag }} ${{ matrix.suffix }} ${{ matrix.url }} ${{ matrix.ref }}
+    - name: Deploy
+      run: |
+        echo $TAG $UNIQUE_TAG_SUFFIX $APP_URL
+
+jobs:
+  staging:
+    env:
+      TAG: develop
+      ENVIRONMENT: staging
+      UNIQUE_TAG_SUFFIX: -stg
+      APP_URL: https://atlas-staging.sun-asterisk.vn
+    <<: *docker-build
+
+  production:
+    env:
+      TAG: stable
+      ENVIRONMENT: production
+      UNIQUE_TAG_SUFFIX: -prod
+      APP_URL: https://atlas.sun-asterisk.vn
+    <<: *docker-build
