@@ -10,6 +10,7 @@ jobs:
       tag: develop
       unique_tag_suffix: -stg
       app_url: https://atlas-staging.sun-asterisk.vn
+    secrets: inherit
 
   production:
     uses: ./.github/workflows/build.yml
@@ -18,3 +19,4 @@ jobs:
       tag: stable
       unique_tag_suffix: -prod
       app_url: https://atlas.sun-asterisk.vn
+    secrets: inherit
