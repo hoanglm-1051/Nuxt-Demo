@@ -6,19 +6,6 @@ on:
   pull_request:
     branches: [ "master" ]
 
-.docker-build: &docker-build
-  runs-on: ubuntu-latest
-  container: docker:20.10.17
-  services:
-    dind:
-      image: docker:20.10.17-dind
-  steps:
-    - uses: actions/checkout@v3
-
-    - name: Deploy
-      run: |
-        echo $TAG $UNIQUE_TAG_SUFFIX $APP_URL
-
 jobs:
   staging:
     env:
@@ -26,12 +13,15 @@ jobs:
       ENVIRONMENT: staging
       UNIQUE_TAG_SUFFIX: -stg
       APP_URL: https://atlas-staging.sun-asterisk.vn
-    <<: *docker-build
-
-  production:
-    env:
-      TAG: stable
-      ENVIRONMENT: production
-      UNIQUE_TAG_SUFFIX: -prod
-      APP_URL: https://atlas.sun-asterisk.vn
-    <<: *docker-build
+    runs-on: ubuntu-latest
+    container: docker:20.10.17
+    services:
+      dind:
+        image: docker:20.10.17-dind
+    steps:
+      - uses: actions/checkout@v3
+  
+      - name: Deploy
+        run: |
+          export UNIQUE_TAG="build-${{ GITHUB_RUN_NUMBER + 100 }}$UNIQUE_TAG_SUFFIX"
+          echo $UNIQUE_TAG
