@@ -23,5 +23,5 @@ jobs:
   
       - name: Deploy
         run: |
-          export UNIQUE_TAG="build-${{ GITHUB_RUN_NUMBER + 100 }}$UNIQUE_TAG_SUFFIX"
+          export UNIQUE_TAG="build-($GITHUB_RUN_NUMBER + 100)$UNIQUE_TAG_SUFFIX"
           echo $UNIQUE_TAG
