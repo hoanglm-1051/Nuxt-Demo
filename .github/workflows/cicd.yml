@@ -4,19 +4,17 @@ on: [push, pull_request, workflow_dispatch]
 
 jobs:
   staging:
-    steps:
-      uses: ./.github/workflows/build.yml
-      with:
-        environment: staging
-        tag: develop
-        unique_tag_suffix: -stg
-        app_url: https://atlas-staging.sun-asterisk.vn
+    uses: ./.github/workflows/build.yml
+    with:
+      environment: staging
+      tag: develop
+      unique_tag_suffix: -stg
+      app_url: https://atlas-staging.sun-asterisk.vn
 
   production:
-    steps:
-      uses: ./.github/workflows/build.yml
-      with:
-        environment: production
-        tag: stable
-        unique_tag_suffix: -prod
-        app_url: https://atlas.sun-asterisk.vn
+    uses: ./.github/workflows/build.yml
+    with:
+      environment: production
+      tag: stable
+      unique_tag_suffix: -prod
+      app_url: https://atlas.sun-asterisk.vn
