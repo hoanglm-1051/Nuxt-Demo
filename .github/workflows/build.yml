@@ -21,6 +21,9 @@ env:
 
 jobs:
   build:
+    environment: 
+      name: ${{ inputs.environment }}
+      url: https://github.com
     runs-on: ubuntu-latest
     container: docker:20.10.17
     services:
