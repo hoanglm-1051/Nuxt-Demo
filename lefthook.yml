@@ -4,11 +4,13 @@ pre-commit:
     ESlint:
       root: web/
       glob: "*.{vue,js,ts}"
-      run: yarn lint --fix {staged_files}
+      files: git diff --name-only master
+      run: docker exec -it seminar-web-1 yarn lint --fix {files}
       stage_fixed: true
     PHP_CodeSniffer&PHPUnit:
       root: api/
       glob: "*.php"
+      # exclude: '(^|/)(api)\.php$'
       run: docker exec -it seminar-php-1 sh -c "composer autofix {staged_files} && composer test"
       stage_fixed: true
 
