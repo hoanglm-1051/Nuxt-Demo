@@ -3,9 +3,7 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header">
-                        Login Now
-                    </div>
+                    <div class="card-header">Login Now</div>
                     <div class="card-body">
                         <form @submit.prevent="login">
                             <div class="form-group row">
@@ -21,7 +19,7 @@
                                         autocomplete="email"
                                         required
                                         autofocus
-                                    >
+                                    />
                                 </div>
                             </div>
 
@@ -37,14 +35,12 @@
                                         name="password"
                                         autocomplete="current-password"
                                         required
-                                    >
+                                    />
                                 </div>
                             </div>
                             <div class="form-group row mb-0">
                                 <div class="col-md-6 offset-md-4">
-                                    <button type="submit" class="btn btn-primary">
-                                        Login
-                                    </button>
+                                    <button type="submit" class="btn btn-primary">Login</button>
                                 </div>
                             </div>
                         </form>
@@ -57,23 +53,23 @@
 
 <script>
 export default {
-    data () {
+    data() {
         return {
             userForm: {
                 email: '',
-                password: ''
-            }
+                password: '',
+            },
         }
     },
     methods: {
-        async login () {
+        async login() {
             await this.$auth.login({
-                data: this.userForm
+                data: this.userForm,
             })
             this.$router.push({
-                path: '/'
+                path: '/',
             })
-        }
-    }
+        },
+    },
 }
 </script>

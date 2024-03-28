@@ -12,8 +12,6 @@
             </div>
             <GetTask />
         </div>
-        <h1 v-if="!$auth.loggedIn">
-            Please sign in!
-        </h1>
+        <h1 v-if="!$auth.loggedIn">Please sign in!</h1>
     </div>
 </template>

@@ -1,20 +1,20 @@
 export default {
-    getTask ({ commit }, task) {
+    getTask({ commit }, task) {
         commit('getTask', task)
     },
-    addTask ({ commit }) {
+    addTask({ commit }) {
         commit('addTask')
     },
-    editTask ({ commit }, task) {
+    editTask({ commit }, task) {
         commit('editTask', task)
     },
-    removeTask ({ commit }, task) {
+    removeTask({ commit }, task) {
         commit('removeTask', task)
     },
-    completeTask ({ commit }, task) {
+    completeTask({ commit }, task) {
         commit('completeTask', task)
     },
-    clearTask ({ commit }) {
+    clearTask({ commit }) {
         commit('clearTask')
-    }
+    },
 }

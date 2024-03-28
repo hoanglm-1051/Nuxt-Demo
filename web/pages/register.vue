@@ -3,9 +3,7 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header">
-                        Register User
-                    </div>
+                    <div class="card-header">Register User</div>
 
                     <div class="card-body">
                         <form @submit.prevent="registerUser">
@@ -21,7 +19,7 @@
                                         name="name"
                                         autocomplete="name"
                                         required
-                                    >
+                                    />
                                 </div>
                             </div>
 
@@ -37,7 +35,7 @@
                                         name="email"
                                         autocomplete="email"
                                         required
-                                    >
+                                    />
                                 </div>
                             </div>
 
@@ -53,15 +51,13 @@
                                         name="password"
                                         autocomplete="new-password"
                                         required
-                                    >
+                                    />
                                 </div>
                             </div>
 
                             <div class="form-group row mb-0">
                                 <div class="col-md-6 offset-md-4">
-                                    <button type="submit" class="btn btn-primary">
-                                        Register
-                                    </button>
+                                    <button type="submit" class="btn btn-primary">Register</button>
                                 </div>
                             </div>
                         </form>
@@ -75,29 +71,29 @@
 <script>
 export default {
     auth: false,
-    data () {
+    data() {
         return {
             userForm: {
                 name: '',
                 email: '',
-                password: ''
-            }
+                password: '',
+            },
         }
     },
     methods: {
-        async registerUser () {
+        async registerUser() {
             await this.$axios.post('register', this.userForm)
 
             this.$auth.login({
                 data: {
                     email: this.userForm.email,
-                    password: this.userForm.password
-                }
+                    password: this.userForm.password,
+                },
             })
             this.$router.push({
-                path: '/'
+                path: '/',
             })
-        }
-    }
+        },
+    },
 }
 </script>

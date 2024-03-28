@@ -19,11 +19,7 @@
                     <li v-for="(task, index) in completed" :key="index" class="list-group-item">
                         {{ task.body }}
                         <div class="btn-group">
-                            <button
-                                type="button"
-                                class="btn btn-danger btn-sm"
-                                @click="remove(task)"
-                            >
+                            <button type="button" class="btn btn-danger btn-sm" @click="remove(task)">
                                 <span class="glyphicon glyphicon-remove-circle" /> Remove
                             </button>
                         </div>
@@ -37,20 +33,20 @@
 <script>
 export default {
     computed: {
-        completed () {
+        completed() {
             return this.$store.getters.completeTask
-        }
+        },
     },
     methods: {
-        remove (task) {
+        remove(task) {
             this.$store.dispatch('removeTask', task)
-        }
-    }
+        },
+    },
 }
 </script>
 
 <style>
-    .btn-group {
-        float: right;
-    }
+.btn-group {
+    float: right;
+}
 </style>

@@ -2,9 +2,7 @@
     <div>
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
-                <a class="navbar-brand" href="#">
-                    Demo - App
-                </a>
+                <a class="navbar-brand" href="#"> Demo - App </a>
                 <button
                     class="navbar-toggler"
                     type="button"
@@ -19,21 +17,15 @@
                     <ul class="navbar-nav ml-auto">
                         <template v-if="!loggedIn">
                             <li class="nav-item">
-                                <NuxtLink class="nav-link" to="/login">
-                                    Login
-                                </NuxtLink>
+                                <NuxtLink class="nav-link" to="/login"> Login </NuxtLink>
                             </li>
                             <li class="nav-item">
-                                <NuxtLink class="nav-link" to="/register">
-                                    Register
-                                </NuxtLink>
+                                <NuxtLink class="nav-link" to="/register"> Register </NuxtLink>
                             </li>
                         </template>
                         <template v-if="loggedIn">
                             <li class="nav-item">
-                                <a class="nav-link" href="#" @click.prevent="logout">
-                                    Logout
-                                </a>
+                                <a class="nav-link" href="#" @click.prevent="logout"> Logout </a>
                             </li>
                         </template>
                     </ul>
@@ -46,12 +38,12 @@
 <script>
 export default {
     methods: {
-        logout () {
+        logout() {
             this.$auth.logout()
             this.$router.push({
-                path: '/login'
+                path: '/login',
             })
-        }
-    }
+        },
+    },
 }
 </script>

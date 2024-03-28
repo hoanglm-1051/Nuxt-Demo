@@ -39,29 +39,29 @@
 <script>
 export default {
     computed: {
-        tasks () {
+        tasks() {
             return this.$store.getters.tasks
         },
-        newTask () {
+        newTask() {
             return this.$store.getters.newTask
-        }
+        },
     },
     methods: {
-        edit (task) {
+        edit(task) {
             this.$store.dispatch('editTask', task)
         },
-        complete (task) {
+        complete(task) {
             this.$store.dispatch('completeTask', task)
         },
-        remove (task) {
+        remove(task) {
             this.$store.dispatch('removeTask', task)
-        }
-    }
+        },
+    },
 }
 </script>
 
 <style>
-    .btn-group{
-        float: right;
-    }
+.btn-group {
+    float: right;
+}
 </style>
