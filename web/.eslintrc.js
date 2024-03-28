@@ -1,23 +1,19 @@
 module.exports = {
-  root: true,
-  env: {
-    browser: true,
-    node: true
+  "env": {
+    "browser": true,
+    "node": true
   },
-  parserOptions: {
-    parser: 'babel-eslint'
-  },
-  extends: [
-    '@nuxtjs',
-    'plugin:nuxt/recommended'
+  "extends": [
+    "plugin:nuxt/recommended",
   ],
-  plugins: [
-  ],
-  // add your custom rules here
-  rules: {
-    "indent": ['error', 4],
-    "vue/html-indent": ['error', 4],
-    "vue/script-indent": ['error', 4],
-    "block-spacing": "error"
+  "plugins": [],
+  "rules": {
+    "vue/multi-word-component-names": 0,
+    "prefer-destructuring": "off",
+    "no-underscore-dangle": "off",
+    "import/no-extraneous-dependencies": "off",
+    "import/prefer-default-export": "off",
+    "vue/no-v-model-argument": "off"
   }
 }
+

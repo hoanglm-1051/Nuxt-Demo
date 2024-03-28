@@ -14,8 +14,7 @@
         "guzzlehttp/guzzle": "^6.3",
         "laravel/framework": "^7.24",
         "laravel/tinker": "^2.0",
-        "laravel/ui": "^2.4",
-        "tymon/jwt-auth": "^1.0"
+        "laravel/ui": "^2.4"
     },
     "require-dev": {
         "facade/ignition": "^2.0",
@@ -23,7 +22,7 @@
         "mockery/mockery": "^1.3.1",
         "nunomaduro/collision": "^4.1",
         "phpunit/phpunit": "^8.5",
-        "sun-asterisk/coding-standard": "^0.2.4"
+        "sun-asterisk/coding-standard": "*"
     },
     "config": {
         "optimize-autoloader": true,
@@ -65,6 +64,13 @@
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
         ],
-        "sniff": "phpcs --basepath=."
+        "sniff": "phpcs --basepath=.",
+        "autofix": "phpcbf",
+        "test": "phpunit --testdox",
+        "coverage": "phpunit --testdox -d memory_limit=-1 --coverage-html=coverage --coverage-clover ./coverage.xml --log-junit coverage/junit.xml",
+        "check": [
+            "@sniff",
+            "@test"
+        ]
     }
 }

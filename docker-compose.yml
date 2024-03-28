@@ -1,0 +1,96 @@
+version: '3.8'
+
+networks:
+  seminar:
+    driver: bridge
+
+services:
+  traefik:
+    image: traefik:2.8
+    restart: unless-stopped
+    command:
+    - --api.dashboard=true
+    - --entrypoints.http.address=:80
+    - --providers.docker
+    - --providers.docker.network=${COMPOSE_PROJECT_NAME}_frontend
+    - --providers.docker.watch=true
+    - --providers.docker.exposedbydefault=false
+    ports:
+    - ${PORT:-80}:80
+    labels:
+    - traefik.enable=true
+    - traefik.http.routers.traefik.rule=Host(`${TRAEFIK_DOMAIN}`)
+    - traefik.http.routers.traefik.service=api@internal
+    - traefik.http.middlewares.traefik-dashboard.redirectRegex.regex=/
+    - traefik.http.middlewares.traefik-dashboard.redirectRegex.replacement=/dashboard/
+    volumes:
+    - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - seminar
+
+  php:
+    image: ghcr.io/sun-asterisk-research/php-dev:7-alpine3.15
+    restart: unless-stopped
+    working_dir: /srv/seminar
+    environment:
+      DOCUMENT_ROOT: /srv/seminar/public
+    volumes:
+    - ./api:/srv/seminar
+    labels:
+    - traefik.enable=true
+    - traefik.http.routers.${COMPOSE_PROJECT_NAME}-api.rule=Host(`${DOMAIN}`) && (PathPrefix(`/api`) || PathPrefix(`/telescope`) || PathPrefix(`/vendor`))
+    - traefik.http.services.${COMPOSE_PROJECT_NAME}-api.loadbalancer.server.port=80
+    networks:
+      - seminar
+
+  web:
+    image: node:16-alpine3.15
+    restart: unless-stopped
+    tty: true
+    working_dir: /srv/web
+    ports:
+    - "24679:24679"
+    volumes:
+    - ./web:/srv/web
+    networks:
+      - seminar
+    labels:
+    - traefik.enable=true
+    - traefik.http.routers.${COMPOSE_PROJECT_NAME}-web.rule=Host(`${DOMAIN}`)
+    - traefik.http.services.${COMPOSE_PROJECT_NAME}-web.loadbalancer.server.port=3000
+
+  redis:
+    image: redis:7.0-alpine
+    restart: unless-stopped
+    networks:
+      - seminar
+    volumes:
+    - ${PATH_DATA:-./.data}/redis:/data
+
+  postgres:
+    image: postgres:14.5-alpine
+    restart: unless-stopped
+    networks:
+      - seminar
+    volumes:
+      - ${PATH_DATA:-./.data}/postgres:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: ${DB_DATABASE}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    restart: unless-stopped
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-pgadmin.rule=Host(`pgadmin.${DOMAIN}`)
+      - traefik.http.services.${COMPOSE_PROJECT_NAME}-pgadmin.loadbalancer.server.port=80
+    user: root
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_DEFAULT_EMAIL:-admin@gmail.com}       # Cannot be changed after first launch
+      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD:-admin}           # Cannot be changed after first launch
+    networks:
+      - seminar
+    volumes:
+      - ${PATH_DATA:-./.data}/pgadmin:/var/lib/pgadmin                        # Delete data files to start again with new user

@@ -7,8 +7,7 @@
     "build": "nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate",
-    "lint:js": "eslint --ext .js,.vue --ignore-path .gitignore .",
-    "lint": "npm run lint:js"
+    "lint": "eslint --ext .js,.vue --ignore-path .gitignore ."
   },
   "dependencies": {
     "@nuxtjs/auth": "^4.9.1",
@@ -16,13 +15,18 @@
     "axios": "^0.20.0",
     "bootstrap": "^4.5.2",
     "bootstrap-vue": "^2.15.0",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-unicorn": "^51.0.1",
+    "eslint-plugin-vue": "^9.24.0",
     "nuxt": "^2.14.0"
   },
   "devDependencies": {
-    "@nuxtjs/eslint-config": "^3.1.0",
+    "@nuxtjs/eslint-config": "^12.0.0",
     "@nuxtjs/eslint-module": "^2.0.0",
     "babel-eslint": "^10.1.0",
-    "eslint": "^7.5.0",
-    "eslint-plugin-nuxt": "^1.0.0"
+    "eslint": "^8.57.0",
+    "eslint-plugin-nuxt": "^1.0.0",
+    "eslint-plugin-prettier": "^5.1.3",
+    "prettier": "^3.2.5"
   }
 }

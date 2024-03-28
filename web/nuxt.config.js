@@ -58,6 +58,7 @@ export default {
         'bootstrap-vue/nuxt',
         // Doc: https://axios.nuxtjs.org/usage
         '@nuxtjs/axios',
+        '@nuxtjs/eslint-module',
         '@nuxtjs/auth'
     ],
     /*
@@ -80,10 +81,10 @@ export default {
         strategies: {
             local: {
                 endpoints: {
-                    login: { 
-                        url: '/login', 
-                        method: 'post', 
-                        propertyName: 'meta.token' 
+                    login: {
+                        url: '/login',
+                        method: 'post',
+                        propertyName: 'meta.token'
                     },
                     user: {
                         url: '/user',

@@ -1,0 +1,13 @@
+# Env
+/.env
+/.data
+
+# IDE
+/.vscode
+/.idea
+
+# Log files
+*.log
+
+# GKC tool
+gkc_*
