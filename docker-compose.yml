@@ -5,6 +5,16 @@ networks:
     driver: bridge
 
 services:
+  commit-lint:
+    image: sunci/commitlint:latest
+    working_dir: /commit-lint
+    restart: unless-stopped
+    volumes:
+      - ./.git:/commit-lint/.git
+    entrypoint: sh -c
+    command: |
+      "echo 'module.exports = {extends:[\"@commitlint/config-conventional\"]}' > commitlint.config.js && tail -f /dev/null"
+
   traefik:
     image: traefik:2.8
     restart: unless-stopped
