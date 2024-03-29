@@ -1,26 +1,28 @@
 pre-commit:
-  parallel: true
+  parallel: false
   commands:
     ESlint:
+      priority: 2
       root: web/
       glob: "*.{vue,js,ts}"
       files: git diff --name-only master
       run: docker exec -it seminar-web-1 yarn lint --fix {files}
       stage_fixed: true
     PHP_CodeSniffer&PHPUnit:
+      priority: 1
       root: api/
       glob: "*.php"
       # exclude: '(^|/)(api)\.php$'
       run: docker exec -it seminar-php-1 sh -c "composer autofix {staged_files} && composer test"
       stage_fixed: true
 
-commit-msg:
-  scripts:
-    "commit_lint.sh":
-      runner: bash
+# commit-msg:
+#   scripts:
+#     "commit_lint.sh":
+#       runner: bash
 
 ### Check commit lint with docker
-# commit-msg:
-#   commands:
-#     commit-lint:
-#       run: docker exec -it seminar-commit-lint-1 npx commitlint --edit "$1"
+commit-msg:
+  commands:
+    commit-lint:
+      run: docker exec -it seminar-commit-lint-1 npx commitlint --edit "$1"
