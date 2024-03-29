@@ -13,7 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('/register', 'Auth\AuthController@register');
+Route::post('/register', 'Auth\AuthController@register');;;;
+
 
 
 
