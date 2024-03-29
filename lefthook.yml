@@ -14,13 +14,13 @@ pre-commit:
       run: docker exec -it seminar-php-1 sh -c "composer autofix {staged_files} && composer test"
       stage_fixed: true
 
-# commit-msg:
-#   scripts:
-#     "commit_lint.sh":
-#       runner: bash
+commit-msg:
+  scripts:
+    "commit_lint.sh":
+      runner: bash
 
 ### Check commit lint with docker
-commit-msg:
-  commands:
-    commit-lint:
-      run: docker exec -it seminar-commit-lint-1 npx commitlint --edit "$1"
+# commit-msg:
+#   commands:
+#     commit-lint:
+#       run: docker exec -it seminar-commit-lint-1 npx commitlint --edit "$1"
