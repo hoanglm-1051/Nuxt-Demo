@@ -14,12 +14,12 @@ pre-commit:
       stage_fixed: true
 
 commit-msg:
-  scripts:
-    "commit_lint.sh":
-      runner: bash
+  commands:
+    commit-lint:
+      run: yarn commitlint
 
-### Check commit lint with docker
+### Check commit lint with commit_lint.sh file
 # commit-msg:
-#   commands:
-#     commit-lint:
-#       run: docker exec -it seminar-commit-lint-1 npx commitlint --edit "$1"
+#   scripts:
+#     "commit_lint.sh":
+#       runner: bash

@@ -18,7 +18,7 @@ jobs:
       environment: staging
       tag: develop
       unique_tag_suffix: -stg
-      app_url: https://atlas-staging.sun-asterisk.vn
+      app_url: https://xxx.sun.vn
     secrets: inherit
 
   production:
@@ -27,5 +27,5 @@ jobs:
       environment: production
       tag: stable
       unique_tag_suffix: -prod
-      app_url: https://atlas.sun-asterisk.vn
+      app_url: https://xxx.sun.vn
     secrets: inherit

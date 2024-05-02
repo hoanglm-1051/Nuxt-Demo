@@ -5,15 +5,14 @@ networks:
     driver: bridge
 
 services:
-  commit-lint:
-    image: sunci/commitlint:latest
-    working_dir: /commit-lint
-    restart: unless-stopped
-    volumes:
-      - ./.git:/commit-lint/.git
+  root:
+    image: node:18-alpine3.16
+    working_dir: /srv/root
     entrypoint: sh -c
+    volumes:
+      - ./:/srv/root/
     command: |
-      "echo 'module.exports = {extends:[\"@commitlint/config-conventional\"]}' > commitlint.config.js && tail -f /dev/null"
+      "apk add --no-cache git && yarn"
 
   traefik:
     image: traefik:2.8

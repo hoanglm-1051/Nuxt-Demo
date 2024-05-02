@@ -1,0 +1,15 @@
+{
+    "private": true,
+    "version": "1.0.0",
+    "scripts": {
+        "postinstall": "lefthook install",
+        "commitlint": "npx commitlint --edit $1"
+    },
+    "devDependencies": {
+        "@evilmartians/lefthook": "^1.6.10",
+        "commitlint": "^19.3.0"
+    },
+    "dependencies": {
+        "@commitlint/config-conventional": "^19.2.2"
+    }
+}

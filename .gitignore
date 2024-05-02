@@ -11,3 +11,6 @@
 
 # GKC tool
 gkc_*
+
+# NodeJS
+node_modules
