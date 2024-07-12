@@ -15,6 +15,7 @@ jobs:
     before_script:
       - yarn config set network-timeout 300000
     script:
+      - echo 1
       - yarn
     cache:
       - key:
